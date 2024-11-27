@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="banner">
           <div className="left">AYUSH</div>
           <div className="right">
-            <p>B-Block, Rajiv chowk(CP),Delhi</p>
+            <p>B-Block, Rajiv chowk[CP],Delhi</p>
             <p>Open: 11:00 AM - 11:00PM</p>
           </div>
         </div>
