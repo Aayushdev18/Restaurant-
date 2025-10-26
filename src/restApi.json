@@ -3,19 +3,19 @@
         {"ourQualities" : [
             {
                 "id": 1,
-                "image": "./quality_food.svg",
+                "image": "/quality_food.svg",
                 "title": "QUALITY FOOD",
                 "description": "Delicious, high-quality dishes crafted with fresh, locally sourced ingredients to satisfy every palate." 
             },
             {
                 "id": 2,
-                "image": "./super_taste.svg",
+                "image": "/super_taste.svg",
                 "title": "SUPER TASTE",
                 "description": "Unforgettable flavors that delight your taste buds with every bite, delivering a truly exceptional dining experience." 
             },
             {
                 "id": 3,
-                "image": "./fast_delivery.svg",
+                "image": "/fast_delivery.svg",
                 "title": "FAST DELIVERY",
                 "description": "Enjoy hot, freshly prepared meals delivered swiftly to your door, ensuring fast and reliable service every time." 
             }
@@ -23,75 +23,83 @@
         "dishes": [
             {
                 "id": 1,
-                "image": "./dinner1.png",
+                "image": "/dinner1.png",
                 "title": "ROASTED LAMB RUMP",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 24.99
             },
             {
                 "id": 2,
-                "image": "./dinner2.png",
+                "image": "/dinner2.png",
                 "title": "CITRUS CURED SALMON",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 22.99
             },
             {
                 "id": 3,
-                "image": "./breakfast1.png",
+                "image": "/breakfast1.png",
                 "title": "PAN SEARED SEA BASS",
-                "category": "Breakfast"
+                "category": "Breakfast",
+                "price": 16.99
             },
             {
                 "id": 4,
-                "image": "./dinner3.png",
+                "image": "/dinner3.png",
                 "title": "STUFFED STRAWBERRY",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 8.99
             },
             {
                 "id": 5,
-                "image": "./lunch1.png",
+                "image": "/lunch1.png",
                 "title": "BEEF BURGER MEAL",
-                "category": "Lunch"
+                "category": "Lunch",
+                "price": 14.99
             },
             {
                 "id": 6,
-                "image": "./dinner4.png",
+                "image": "/dinner4.png",
                 "title": "MUSSELS SOUP",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 18.99
             },
             {
                 "id": 7,
-                "image": "./dinner5.png",
+                "image": "/dinner5.png",
                 "title": "ITALIAN SPAGHETTI",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 19.99
             },
             {
                 "id": 8,
-                "image": "./dinner6.png",
+                "image": "/dinner6.png",
                 "title": "GRILLED FISH",
-                "category": "Dinner"
+                "category": "Dinner",
+                "price": 21.99
             }
         ],
         "team": [
             {
                 "id": 1,
-                "image": "./team_member_1.png",
+                "image": "/team_member_1.png",
                 "name": "JOHNATHAN TYLER",
                 "designation": "Founder & Head Chef"
             },
             {
                 "id": 2,
-                "image": "./team_member_2.png",
+                "image": "/team_member_2.png",
                 "name": "WADE WARREN",
                 "designation": "Junior Chef"
             },
             {
                 "id": 3,
-                "image": "./team_member_3.png",
+                "image": "/team_member_3.png",
                 "name": "JHON DOE",
                 "designation": "Fast Food Chef"
             },
             {
                 "id": 4,
-                "image": "./team_member_4.png",
+                "image": "/team_member_4.png",
                 "name": "ALEX COAL",
                 "designation": "Senior Chef"
             }
@@ -99,21 +107,21 @@
         "testimonials": [
             {
                 "id": 1,
-                "image": "./review1.png",
+                "image": "/review_1.png",
                 "description": "Morbi nulla nec dui lacus, in. Libero in pretium metus massa. Sodales dignissim vitae mauris varius faucibus. Eleifend dui, non laoreet ac luctus facilisis diam. Enim scelerisque vel at id viverra tellus.",
                 "rating": 4,
                 "userName": "Jane Cooper"
             },
             {
                 "id": 2,
-                "image": "./review2.png",
+                "image": "/review_2.png",
                 "description": "Tortor vel nunc netus pharetra enim, enim dolor mauris in. Sit nam fringilla in egestas. Libero condimentum quis in vulputate adipiscing venenatis augue. Venenatis faucibus.",
                 "rating": 4.5,
                 "userName": "Esther Howard"
             },
             {
                 "id": 3,
-                "image": "./review3.png",
+                "image": "/review_3.png",
                 "description": "Tortor vel nunc netus pharetra enim, enim dolor mauris in. Sit nam fringilla in egestas. Libero condimentum quis in vulputate adipiscing venenatis augue. Venenatis faucibus.",
                 "rating": 5,
                 "userName": "Guy Hawkins"

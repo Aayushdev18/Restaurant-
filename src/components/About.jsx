@@ -29,7 +29,7 @@ const About = () => {
             </Link>
           </div>
           <div className="banner">
-            <img src="about.png" alt="about" />
+            <img src="/about.png" alt="about" />
           </div>
         </div>
       </section>

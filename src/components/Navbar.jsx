@@ -2,22 +2,26 @@ import React, { useState } from "react";
 import { data } from "../restApi.json";
 import { Link } from "react-scroll";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { HiOutlineArrowLeft } from "react-icons/hi";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const [isComingSoonVisible, setComingSoonVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMenuClick = () => {
-    setComingSoonVisible(true); 
-    setTimeout(() => {
-      setComingSoonVisible(false); 
-    }, 2000); 
+    navigate("/menu");
+  };
+
+  const handleBackClick = () => {
+    navigate("/");
   };
 
   return (
     <>
       <nav>
-        <div className="logo">AYUSH</div>
+        <div className="logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>AYUSH</div>
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           <div className="links">
             {data[0].navbarLinks.map((element) => (
@@ -33,19 +37,20 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Button text changes to "COMING SOON" on click */}
-          <button
-            className="menuBtn"
-            onClick={handleMenuClick}
-          >
-            {isComingSoonVisible ? "COMING SOON" : "OUR MENU"}
-          </button>
-
-          {/* Conditionally render the "COMING SOON" message */}
-          {isComingSoonVisible && (
-            <div className="coming-soon-message">
-              <h2>COMING SOON</h2>
-            </div>
+          {location.pathname === "/menu" ? (
+            <button
+              className="menuBtn backBtn"
+              onClick={handleBackClick}
+            >
+              <HiOutlineArrowLeft /> BACK
+            </button>
+          ) : (
+            <button
+              className="menuBtn"
+              onClick={handleMenuClick}
+            >
+              OUR MENU
+            </button>
           )}
         </div>
         <div className="hamburger" onClick={() => setShow(!show)}>

@@ -71,12 +71,18 @@ nav .menuBtn {
   border: 1px solid #333;
   border-radius: 20px;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 nav .menuBtn:hover {
   color: #fff;
   background: #222;
   transition: 0.3s;
   cursor: pointer;
+}
+nav .menuBtn svg {
+  font-size: 1.2rem;
 }
 nav .hamburger {
   display: none;
@@ -1109,6 +1115,121 @@ footer .container .banner .right {
   }
   .notFound .container h1 {
     font-size: 1.75rem;
+  }
+}
+/**********************************************************************************************************************/
+
+/* MENU PAGE STYLING */
+/**********************************************************************************************************************/
+.menuPage {
+  min-height: 100vh;
+  padding: 100px 20px 50px 20px;
+}
+.menuPage .container {
+  max-width: 1500px;
+  min-width: 1500px;
+  margin: 0 auto;
+}
+.menuPage .heading_section {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.menuPage .heading_section h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.menuPage .heading_section p {
+  color: #333;
+  font-size: 18px;
+  font-weight: 300;
+}
+.menuPage .menu_items_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.menuPage .menu_card {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.menuPage .menu_card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.menuPage .menu_card .image_wrapper {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+.menuPage .menu_card .image_wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.menuPage .menu_card:hover .image_wrapper img {
+  transform: scale(1.05);
+}
+.menuPage .menu_card .content_wrapper {
+  padding: 20px;
+}
+.menuPage .menu_card .content_wrapper h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+.menuPage .menu_card .content_wrapper .category {
+  display: inline-block;
+  padding: 5px 15px;
+  background: linear-gradient(186deg, black, #7e7a7a8a);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.menuPage .menu_card .content_wrapper .price_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menuPage .menu_card .content_wrapper .price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #222;
+}
+
+@media (max-width: 1520px) {
+  .menuPage .container {
+    min-width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .menuPage .menu_items_container {
+    grid-template-columns: 1fr;
+  }
+  .menuPage .heading_section h1 {
+    font-size: 2.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .menuPage {
+    padding: 80px 20px 50px 20px;
+  }
+  .menuPage .heading_section h1 {
+    font-size: 2rem;
+  }
+  .menuPage .heading_section p {
+    font-size: 16px;
+  }
+  .menuPage .menu_card .content_wrapper h3 {
+    font-size: 1.3rem;
+  }
+  .menuPage .menu_card .content_wrapper .price {
+    font-size: 1.5rem;
   }
 }
 /**********************************************************************************************************************/

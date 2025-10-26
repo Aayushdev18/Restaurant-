@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import Home from './Pages/Home';
 import Notfound from './Pages/Notfound';
 import Succes from './Pages/Succes';
+import MenuPage from './Pages/MenuPage';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path='/' element={<Home/>}/>
+          <Route path='/menu' element={<MenuPage/>}/>
           <Route path='/success' element={<Succes/>}/>
           <Route path='*' element={<Notfound/>}/>
         </Routes>
