@@ -26,56 +26,64 @@
                 "image": "/dinner1.png",
                 "title": "ROASTED LAMB RUMP",
                 "category": "Dinner",
-                "price": 24.99
+                "price": 24.99,
+                "description": "Tender lamb rump roasted to perfection with herbs and spices, served with seasonal vegetables."
             },
             {
                 "id": 2,
                 "image": "/dinner2.png",
                 "title": "CITRUS CURED SALMON",
                 "category": "Dinner",
-                "price": 22.99
+                "price": 22.99,
+                "description": "Fresh salmon cured with citrus, topped with dill and capers, served with sour cream."
             },
             {
                 "id": 3,
                 "image": "/breakfast1.png",
                 "title": "PAN SEARED SEA BASS",
                 "category": "Breakfast",
-                "price": 16.99
+                "price": 16.99,
+                "description": "Crispy skin sea bass with lemon butter sauce and fresh herbs, a perfect start to your day."
             },
             {
                 "id": 4,
                 "image": "/dinner3.png",
                 "title": "STUFFED STRAWBERRY",
                 "category": "Dinner",
-                "price": 8.99
+                "price": 8.99,
+                "description": "Fresh strawberries filled with creamy mascarpone, perfect for a sweet finish."
             },
             {
                 "id": 5,
                 "image": "/lunch1.png",
                 "title": "BEEF BURGER MEAL",
                 "category": "Lunch",
-                "price": 14.99
+                "price": 14.99,
+                "description": "Juicy beef patty with crispy lettuce, tomato, and our special sauce, served with fries."
             },
             {
                 "id": 6,
                 "image": "/dinner4.png",
                 "title": "MUSSELS SOUP",
                 "category": "Dinner",
-                "price": 18.99
+                "price": 18.99,
+                "description": "Fresh mussels in a rich white wine and garlic broth, served with crusty bread."
             },
             {
                 "id": 7,
                 "image": "/dinner5.png",
                 "title": "ITALIAN SPAGHETTI",
                 "category": "Dinner",
-                "price": 19.99
+                "price": 19.99,
+                "description": "Classic Italian spaghetti with homemade marinara sauce and freshly grated parmesan."
             },
             {
                 "id": 8,
                 "image": "/dinner6.png",
                 "title": "GRILLED FISH",
                 "category": "Dinner",
-                "price": 21.99
+                "price": 21.99,
+                "description": "Fresh catch of the day grilled with lemon and herbs, served with roasted vegetables."
             }
         ],
         "team": [

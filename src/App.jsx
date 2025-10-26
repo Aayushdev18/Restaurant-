@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Notfound from './Pages/Notfound';
 import Succes from './Pages/Succes';
 import MenuPage from './Pages/MenuPage';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path='*' element={<Notfound/>}/>
         </Routes>
         <Toaster/>
+        <ScrollToTop/>
       </Router>
     </>
   );
