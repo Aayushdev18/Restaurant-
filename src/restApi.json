@@ -5,110 +5,150 @@
                 "id": 1,
                 "image": "/quality_food.svg",
                 "title": "QUALITY FOOD",
-                "description": "Delicious, high-quality dishes crafted with fresh, locally sourced ingredients to satisfy every palate." 
+                "description": "Plates built around fresh Delhi produce and slow kitchen work — not a freezer-to-fryer menu."
             },
             {
                 "id": 2,
                 "image": "/super_taste.svg",
-                "title": "SUPER TASTE",
-                "description": "Unforgettable flavors that delight your taste buds with every bite, delivering a truly exceptional dining experience." 
+                "title": "HONEST FLAVOUR",
+                "description": "Spice, smoke, and acidity in balance. Every dish should taste like someone actually tasted it first."
             },
             {
                 "id": 3,
                 "image": "/fast_delivery.svg",
-                "title": "FAST DELIVERY",
-                "description": "Enjoy hot, freshly prepared meals delivered swiftly to your door, ensuring fast and reliable service every time." 
+                "title": "WARM HOSPITALITY",
+                "description": "A Connaught Place table with unhurried service — we host dinners, not transactions."
             }
         ],
         "dishes": [
             {
                 "id": 1,
-                "image": "/dinner1.png",
-                "title": "ROASTED LAMB RUMP",
+                "image": "/dishes/biryani.jpg",
+                "title": "DUM BIRYANI",
                 "category": "Dinner",
-                "price": 24.99,
-                "description": "Tender lamb rump roasted to perfection with herbs and spices, served with seasonal vegetables."
+                "diet": "Non-veg",
+                "spice": "Medium",
+                "seasonal": false,
+                "allergens": ["Dairy"],
+                "chefNote": "Ask for extra raita if you want it milder.",
+                "price": 599,
+                "description": "Saffron rice, slow-cooked chicken masala, and crispy onions. The plate Connaught Place comes back for."
             },
             {
                 "id": 2,
-                "image": "/dinner2.png",
-                "title": "CITRUS CURED SALMON",
+                "image": "/dishes/salmon.jpg",
+                "title": "CITRUS SALMON TOAST",
                 "category": "Dinner",
-                "price": 22.99,
-                "description": "Fresh salmon cured with citrus, topped with dill and capers, served with sour cream."
+                "diet": "Non-veg",
+                "spice": "Mild",
+                "seasonal": false,
+                "allergens": ["Fish", "Gluten"],
+                "chefNote": "Cured in-house; limited portions after 9pm.",
+                "price": 799,
+                "description": "Cured salmon on toasted sourdough with herbs, capers, and a light citrus cream."
             },
             {
                 "id": 3,
-                "image": "/breakfast1.png",
-                "title": "PAN SEARED SEA BASS",
+                "image": "/dishes/grain-bowl.jpg",
+                "title": "HARVEST GRAIN BOWL",
                 "category": "Breakfast",
-                "price": 16.99,
-                "description": "Crispy skin sea bass with lemon butter sauce and fresh herbs, a perfect start to your day."
+                "diet": "Veg",
+                "spice": "Mild",
+                "seasonal": true,
+                "allergens": ["Gluten", "Nuts"],
+                "chefNote": "Can be made vegan — skip the yoghurt.",
+                "price": 449,
+                "description": "Warm grains, greens, and a citrus dressing. Saturday and Sunday until noon, and all weekday mornings."
             },
             {
                 "id": 4,
-                "image": "/dinner3.png",
-                "title": "STUFFED STRAWBERRY",
+                "image": "/dishes/berry-cake.jpg",
+                "title": "BERRY CREAM SLICE",
                 "category": "Dinner",
-                "price": 8.99,
-                "description": "Fresh strawberries filled with creamy mascarpone, perfect for a sweet finish."
+                "diet": "Veg",
+                "spice": "Mild",
+                "seasonal": true,
+                "allergens": ["Dairy", "Gluten", "Eggs"],
+                "chefNote": "Best with filter coffee. Berries change with the market.",
+                "price": 349,
+                "description": "Soft sponge, cream, and seasonal berries — a small sweet finish after dinner."
             },
             {
                 "id": 5,
-                "image": "/lunch1.png",
+                "image": "/dishes/burger.jpg",
                 "title": "BEEF BURGER MEAL",
                 "category": "Lunch",
-                "price": 14.99,
-                "description": "Juicy beef patty with crispy lettuce, tomato, and our special sauce, served with fries."
+                "diet": "Non-veg",
+                "spice": "Medium",
+                "seasonal": false,
+                "allergens": ["Gluten", "Dairy"],
+                "chefNote": "Comes with fries. Add a fried egg until 4pm.",
+                "price": 599,
+                "description": "Griddled patty, house sauce, lettuce, tomato, and fries. Built for a CP lunch hour."
             },
             {
                 "id": 6,
-                "image": "/dinner4.png",
+                "image": "/dishes/mussels.jpg",
                 "title": "MUSSELS SOUP",
                 "category": "Dinner",
-                "price": 18.99,
-                "description": "Fresh mussels in a rich white wine and garlic broth, served with crusty bread."
+                "diet": "Non-veg",
+                "spice": "Mild",
+                "seasonal": false,
+                "allergens": ["Shellfish", "Alcohol"],
+                "chefNote": "Subject to the morning market. We will say if we are out.",
+                "price": 899,
+                "description": "Mussels in white wine, garlic, and parsley, with crusty bread for the broth."
             },
             {
                 "id": 7,
-                "image": "/dinner5.png",
+                "image": "/dishes/spaghetti.jpg",
                 "title": "ITALIAN SPAGHETTI",
-                "category": "Dinner",
-                "price": 19.99,
-                "description": "Classic Italian spaghetti with homemade marinara sauce and freshly grated parmesan."
+                "category": "Lunch",
+                "diet": "Veg",
+                "spice": "Mild",
+                "seasonal": false,
+                "allergens": ["Gluten"],
+                "chefNote": "Ask for chilli oil on the side.",
+                "price": 749,
+                "description": "Spaghetti in a slow marinara, finished with parmesan and basil."
             },
             {
                 "id": 8,
-                "image": "/dinner6.png",
+                "image": "/dishes/grilled-fish.jpg",
                 "title": "GRILLED FISH",
                 "category": "Dinner",
-                "price": 21.99,
-                "description": "Fresh catch of the day grilled with lemon and herbs, served with roasted vegetables."
+                "diet": "Non-veg",
+                "spice": "Mild",
+                "seasonal": false,
+                "allergens": ["Fish"],
+                "chefNote": "Catch of the day — usually seer or rawas.",
+                "price": 1299,
+                "description": "Catch of the day, lemon, herbs, and roasted vegetables."
             }
         ],
         "team": [
             {
                 "id": 1,
                 "image": "/team_member_1.png",
-                "name": "JOHNATHAN TYLER",
+                "name": "ARJUN MEHTA",
                 "designation": "Founder & Head Chef"
             },
             {
                 "id": 2,
                 "image": "/team_member_2.png",
-                "name": "WADE WARREN",
-                "designation": "Junior Chef"
+                "name": "PRIYA SHARMA",
+                "designation": "Pastry Chef"
             },
             {
                 "id": 3,
                 "image": "/team_member_3.png",
-                "name": "JHON DOE",
-                "designation": "Fast Food Chef"
+                "name": "ROHAN KAPOOR",
+                "designation": "Sous Chef"
             },
             {
                 "id": 4,
                 "image": "/team_member_4.png",
-                "name": "ALEX COAL",
+                "name": "ALEX COLE",
                 "designation": "Senior Chef"
             }
         ],
@@ -116,45 +156,45 @@
             {
                 "id": 1,
                 "image": "/review_1.png",
-                "description": "Morbi nulla nec dui lacus, in. Libero in pretium metus massa. Sodales dignissim vitae mauris varius faucibus. Eleifend dui, non laoreet ac luctus facilisis diam. Enim scelerisque vel at id viverra tellus.",
-                "rating": 4,
-                "userName": "Jane Cooper"
+                "description": "Booked a Saturday table after work in CP. The biryani was cooked properly, the room was calm, and nobody rushed us out. That is rare in this neighbourhood.",
+                "rating": 5,
+                "userName": "Ananya Gupta"
             },
             {
                 "id": 2,
                 "image": "/review_2.png",
-                "description": "Tortor vel nunc netus pharetra enim, enim dolor mauris in. Sit nam fringilla in egestas. Libero condimentum quis in vulputate adipiscing venenatis augue. Venenatis faucibus.",
-                "rating": 4.5,
-                "userName": "Esther Howard"
+                "description": "Came for a weekday lunch. Burger and spaghetti were both better than they needed to be, and the staff actually remembered a water refill.",
+                "rating": 4,
+                "userName": "Vikram Sethi"
             },
             {
                 "id": 3,
                 "image": "/review_3.png",
-                "description": "Tortor vel nunc netus pharetra enim, enim dolor mauris in. Sit nam fringilla in egestas. Libero condimentum quis in vulputate adipiscing venenatis augue. Venenatis faucibus.",
+                "description": "Sunday breakfast with family, then we stayed for the grilled fish. It felt like a real restaurant, not a theme. We will be back for a birthday.",
                 "rating": 5,
-                "userName": "Guy Hawkins"
+                "userName": "Meera Iyer"
             }
         ],
         "who_we_are": [
             {
                 "id": 1,
-                "number": "14",
-                "title": "Restaurants"
+                "number": "01",
+                "title": "Restaurant in CP"
             },
             {
                 "id": 2,
-                "number": "20",
-                "title": "Chef In Kitchen"
+                "number": "08",
+                "title": "Chefs in Kitchen"
             },
             {
                 "id": 3,
                 "number": "08",
-                "title": "Years Of Experience"
+                "title": "Years of Cooking"
             },
             {
                 "id": 4,
-                "number": "200",
-                "title": "Food Dishes"
+                "number": "40",
+                "title": "Dishes on Menu"
             }
         ],
         "navbarLinks": [
@@ -170,16 +210,21 @@
             },
             {
                 "id": 3,
-                "title": "SERVICES",
-                "link": "qualities"
+                "title": "FIND US",
+                "link": "location"
             },
             {
                 "id": 4,
+                "title": "GROUPS",
+                "link": "groups"
+            },
+            {
+                "id": 5,
                 "title": "TEAM",
                 "link": "team"
             },
             {
-                "id": 5,
+                "id": 6,
                 "title": "RESERVATION",
                 "link": "reservation"
             }
