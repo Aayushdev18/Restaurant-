@@ -29,6 +29,10 @@ const faqs = [
     q: "How do I cancel or move a table?",
     a: "WhatsApp the same thread. Before 3pm on the day there is no fuss. After that we may not be able to fill the slot — please still message us.",
   },
+  {
+    q: "Can I talk to the restaurant from the site?",
+    a: "Yes. Open the concierge (microphone, bottom right). It can answer hours and the menu, and it writes table requests and takeaway to the kitchen board. Chrome or Edge is best for voice; typing always works.",
+  },
 ];
 
 const Faq = () => {

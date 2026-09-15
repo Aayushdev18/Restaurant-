@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AiFillCaretUp } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
 import { restaurant, whatsappUrl } from "../restaurant";
+import VoiceConcierge from "./VoiceConcierge";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,6 +18,7 @@ const ScrollToTop = () => {
 
   return (
     <div className="float_actions">
+      <VoiceConcierge />
       <a
         className="whatsapp_float"
         href={whatsappUrl(`Hi ${restaurant.name}, I have a question.`)}

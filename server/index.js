@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Inquiry, Order, Reservation, serialize } from "./models.js";
 import { fileStore } from "./fileStore.js";
+import { computeAvailability } from "./availability.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, ".env") });
@@ -80,6 +81,68 @@ app.post("/api/reservations", async (req, res) => {
     return res.status(201).json({ message: "Table request saved.", reservation: saved });
   } catch (error) {
     res.status(500).json({ message: error.message || "Could not save reservation." });
+  }
+});
+
+const listReservations = async () =>
+  useMongo ? (await Reservation.find()).map(serialize) : fileStore.list("reservations");
+
+const findReservation = async (id) => {
+  if (useMongo) {
+    const row = await Reservation.findById(id);
+    return row ? serialize(row) : null;
+  }
+  const rows = await fileStore.list("reservations");
+  return rows.find((row) => row.id === id) || null;
+};
+
+app.post("/api/reservations/availability", async (req, res) => {
+  try {
+    const date = String(req.body?.date || "");
+    const time = String(req.body?.time || "");
+    const partySize = req.body?.partySize || req.body?.guests || 2;
+    const rows = await listReservations();
+    res.json(computeAvailability(rows, date, time, partySize));
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Could not check availability." });
+  }
+});
+
+app.get("/api/reservations/lookup", async (req, res) => {
+  const phone = String(req.query.phone || "").replace(/\D/g, "");
+  if (phone.length !== 10) {
+    return res.status(400).json({ message: "Need a 10-digit mobile number." });
+  }
+  const rows = (await listReservations()).filter(
+    (row) => row.phone === phone && row.status !== "cancelled"
+  );
+  res.json({ reservations: rows });
+});
+
+app.patch("/api/reservations/:id/guest", async (req, res) => {
+  try {
+    const phone = String(req.body?.phone || "").replace(/\D/g, "");
+    const existing = await findReservation(req.params.id);
+    if (!existing || existing.phone !== phone) {
+      return res.status(404).json({ message: "No matching reservation." });
+    }
+    const patch = {};
+    if (req.body.partySize != null) patch.partySize = String(req.body.partySize);
+    if (req.body.date) patch.date = req.body.date;
+    if (req.body.time) patch.time = req.body.time;
+    if (req.body.seating) patch.seating = req.body.seating;
+    if (req.body.status === "cancelled") patch.status = "cancelled";
+    if (!Object.keys(patch).length) {
+      return res.status(400).json({ message: "Nothing to update." });
+    }
+    if (useMongo) {
+      const saved = await Reservation.findByIdAndUpdate(req.params.id, patch, { new: true });
+      return res.json({ reservation: serialize(saved) });
+    }
+    const saved = await fileStore.update("reservations", req.params.id, patch);
+    res.json({ reservation: saved });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Could not update reservation." });
   }
 });
 

@@ -60,8 +60,8 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button type="button" onClick={() => goToSection("groups")}>
-                  Groups & offers
+                <button type="button" onClick={() => navigate("/kitchen")}>
+                  Staff board
                 </button>
               </li>
             </ul>
@@ -100,7 +100,7 @@ const Footer = () => {
         </div>
 
         <div className="footer_bottom">
-          <p>&copy; {new Date().getFullYear()} AYUSH RESTAURANT. All rights reserved. Developed by Ayush.</p>
+          <p>&copy; {new Date().getFullYear()} AYUSH RESTAURANT. All rights reserved.</p>
         </div>
       </div>
     </footer>

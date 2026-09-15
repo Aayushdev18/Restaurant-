@@ -1,34 +1,32 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-scroll";
 import Navbar from "./Navbar";
 
 const HeroSection = () => {
   return (
     <section className="heroSection" id="heroSection">
-        <Navbar/>
-      <div className="container">
-        <div className="banner">
-          <div className="largeBox">
-            <h1 className="title">Delicious</h1>
-          </div>
-          <div className="combined_boxes">
-            <div className="imageBox">
-              <img src="/hero1.png" alt="hero1" />
-            </div>
-            <div className="textAndLogo">
-              <div className="textWithSvg">
-                <h1 className="title">Food</h1>
-                <h1 className="title dishes_title">Dishes</h1>
-                <img src="/threelines.svg" alt="three" />
-              </div>
-              <img className="logo" src="/logo.svg" alt="logo" />
-            </div>
+      <Navbar />
+      <div className="hero_inner">
+        <div className="hero_copy">
+          <p className="hero_eyebrow">Connaught Place · New Delhi</p>
+          <h1>A proper table in CP.</h1>
+          <p className="hero_lede">
+            Dum biryani, catch of the day, and a room that does not rush you. Reserve online,
+            on WhatsApp, or with the concierge.
+          </p>
+          <div className="hero_actions">
+            <RouterLink className="hero_btn" to="/menu">
+              See the menu
+            </RouterLink>
+            <Link className="hero_btn ghost" to="reservation" smooth duration={500}>
+              Book a table
+            </Link>
           </div>
         </div>
-        <div className="banner">
-          <div className="imageBox">
-            <img src="/hero2.png" alt="hero2" />
-          </div>
-          <h1 className="title dishes_title">Dishes</h1>
+        <div className="hero_photos">
+          <img src="/hero1.png" alt="Breakfast pancakes at Ayush Restaurant" />
+          <img src="/hero2.png" alt="Crispy burger plated in the dining room" />
         </div>
       </div>
     </section>

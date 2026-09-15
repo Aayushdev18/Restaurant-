@@ -60,7 +60,7 @@ const Kitchen = () => {
       <section className="kitchen">
         <form className="kitchen_login" onSubmit={login}>
           <h1>Kitchen</h1>
-          <p>Staff only. Default password is in server/.env — ADMIN_KEY.</p>
+          <p>Staff login for reservations, takeaway, and inquiries.</p>
           <input
             type="password"
             placeholder="Kitchen password"
@@ -76,8 +76,8 @@ const Kitchen = () => {
   return (
     <section className="kitchen">
       <header className="kitchen_bar">
-        <h1>Kitchen board</h1>
-        <p>Store: {store || "…"}</p>
+        <h1>Operations</h1>
+        <p>{store === "mongodb" ? "MongoDB" : store === "file" ? "Local store" : "Connecting…"}</p>
         <div className="kitchen_tabs">
           {["reservations", "orders", "inquiries"].map((name) => (
             <button
@@ -86,7 +86,7 @@ const Kitchen = () => {
               onClick={() => setTab(name)}
               type="button"
             >
-              {name}
+              {name[0].toUpperCase() + name.slice(1)}
             </button>
           ))}
         </div>

@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev:server\" \"npm run dev:client\"",
+    "dev": "concurrently -n api,agent,web -c yellow,magenta,cyan \"npm run dev:server\" \"npm run dev:agent\" \"npm run dev:client\"",
     "dev:client": "vite",
     "dev:server": "node --watch server/index.js",
+    "dev:agent": "agent/.venv/bin/python -m uvicorn app:app --app-dir agent --reload --port 8000 --host 127.0.0.1",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
