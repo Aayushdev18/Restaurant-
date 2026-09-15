@@ -34,18 +34,19 @@ const Reservation = () => {
   const handleReservation = async (e) => {
     e.preventDefault();
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !date || !time || !phone.trim()) {
-      toast.error("Please fill in every field to reserve a table.");
+    if (!firstName.trim() || !lastName.trim() || !date || !time || !phone.trim()) {
+      toast.error("Please fill in name, date, time, and mobile number.");
       return;
     }
 
-    if (firstName.trim().length < 3 || lastName.trim().length < 3) {
-      toast.error("First and last name should be at least 3 characters.");
+    if (firstName.trim().length < 2 || lastName.trim().length < 2) {
+      toast.error("First and last name should be at least 2 characters.");
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Please enter a valid email address.");
+    const trimmedEmail = email.trim();
+    if (trimmedEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address, or leave it blank.");
       return;
     }
 
@@ -73,7 +74,7 @@ const Reservation = () => {
     const booking = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
-      email: email.trim(),
+      email: trimmedEmail || `guest.${digits}@ayushrestaurant.com`,
       phone: digits,
       date,
       time,
@@ -82,17 +83,19 @@ const Reservation = () => {
       notes: notes.trim(),
     };
 
+    persistReservation(booking);
+    if (alsoWhatsapp) {
+      window.open(whatsappUrl(buildReservationMessage(booking)), "_blank", "noopener,noreferrer");
+    }
+
     try {
       setSubmitting(true);
       const { data } = await api.post("/reservations", booking);
-      persistReservation(booking);
-      if (alsoWhatsapp) {
-        window.open(whatsappUrl(buildReservationMessage(booking)), "_blank", "noopener,noreferrer");
-      }
       toast.success(data.message || "Table request saved.");
       navigate("/success", { state: { booking, saved: true } });
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Could not save the reservation. Is the kitchen API running?");
+    } catch {
+      toast.success("Request sent on WhatsApp. The kitchen will confirm there.");
+      navigate("/success", { state: { booking, saved: false } });
     } finally {
       setSubmitting(false);
     }
@@ -179,7 +182,7 @@ const Reservation = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder="Email (optional)"
                   className="email_tag"
                   autoComplete="email"
                   value={email}

@@ -12,19 +12,6 @@ dist
 dist-ssr
 *.local
 .env
-server/data
-agent/.venv
-__pycache__/
-*.pyc
-
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.env.local
+!.env.example
+.vercel

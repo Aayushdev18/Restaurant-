@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
@@ -7,6 +9,7 @@ import mongoose from "mongoose";
 import { Inquiry, Order, Reservation, serialize } from "./models.js";
 import { fileStore } from "./fileStore.js";
 import { computeAvailability } from "./availability.js";
+import { createConcierge } from "./concierge.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, ".env") });
@@ -16,10 +19,46 @@ const PORT = Number(process.env.PORT) || 5001;
 const ADMIN_KEY = process.env.ADMIN_KEY || "ayush-kitchen";
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ayush-restaurant";
 
-app.use(cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173"] }));
-app.use(express.json());
+app.use(cors({ origin: true }));
+app.use(express.json({ limit: "1mb" }));
+app.use((req, _res, next) => {
+  const forwarded = req.headers["x-forwarded-uri"] || req.headers["x-invoke-path"];
+  if (typeof forwarded === "string") {
+    const pathOnly = forwarded.split("?")[0];
+    if (pathOnly.startsWith("/api") || pathOnly.startsWith("/agent")) req.url = forwarded;
+  }
+  next();
+});
 
 let useMongo = false;
+let dbReady = null;
+
+const mongoLooksRemote = (uri) => Boolean(uri) && !/127\.0\.0\.1|localhost/i.test(uri);
+
+const ensureDb = async () => {
+  if (useMongo) return;
+  if (dbReady) return dbReady;
+  dbReady = (async () => {
+    if (process.env.VERCEL && !mongoLooksRemote(MONGO_URI)) return;
+    try {
+      if (mongoose.connection.readyState === 1) {
+        useMongo = true;
+        return;
+      }
+      await mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: process.env.VERCEL ? 8000 : 2500 });
+      useMongo = true;
+    } catch (error) {
+      useMongo = false;
+      console.warn(`MongoDB unavailable (${error.message}). Using JSON store.`);
+    }
+  })();
+  return dbReady;
+};
+
+app.use(async (_req, _res, next) => {
+  await ensureDb();
+  next();
+});
 
 const requireAdmin = (req, res, next) => {
   const token = (req.headers.authorization || "").replace("Bearer ", "");
@@ -48,22 +87,23 @@ app.post("/api/auth/login", (req, res) => {
 app.post("/api/reservations", async (req, res) => {
   try {
     const body = req.body || {};
-    const required = ["firstName", "lastName", "email", "phone", "date", "time", "partySize"];
+    const required = ["firstName", "lastName", "phone", "date", "time", "partySize"];
     if (required.some((key) => !String(body[key] || "").trim())) {
       return res.status(400).json({ message: "Please fill in every reservation field." });
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
-      return res.status(400).json({ message: "Enter a valid email." });
     }
     const phone = String(body.phone).replace(/\D/g, "");
     if (phone.length !== 10) {
       return res.status(400).json({ message: "Enter a 10-digit mobile number." });
     }
+    const email = String(body.email || "").trim().toLowerCase() || `guest.${phone}@ayushrestaurant.com`;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ message: "Enter a valid email." });
+    }
 
     const payload = {
       firstName: body.firstName.trim(),
       lastName: body.lastName.trim(),
-      email: body.email.trim().toLowerCase(),
+      email: email,
       phone,
       date: body.date,
       time: body.time,
@@ -143,6 +183,72 @@ app.patch("/api/reservations/:id/guest", async (req, res) => {
     res.json({ reservation: saved });
   } catch (error) {
     res.status(500).json({ message: error.message || "Could not update reservation." });
+  }
+});
+
+const createReservationRecord = async (payload) => {
+  if (useMongo) return serialize(await Reservation.create(payload));
+  return fileStore.create("reservations", payload);
+};
+
+const updateGuestReservation = async (id, phone, patchIn) => {
+  const existing = await findReservation(id);
+  const digits = String(phone || "").replace(/\D/g, "");
+  if (!existing || existing.phone !== digits) return null;
+  const patch = {};
+  if (patchIn.partySize != null) patch.partySize = String(patchIn.partySize);
+  if (patchIn.date) patch.date = patchIn.date;
+  if (patchIn.time) patch.time = patchIn.time;
+  if (patchIn.seating) patch.seating = patchIn.seating;
+  if (patchIn.status === "cancelled") patch.status = "cancelled";
+  if (!Object.keys(patch).length) return existing;
+  if (useMongo) {
+    const saved = await Reservation.findByIdAndUpdate(id, patch, { new: true });
+    return saved ? serialize(saved) : null;
+  }
+  return fileStore.update("reservations", id, patch);
+};
+
+const createOrderRecord = async (payload) => {
+  if (useMongo) return serialize(await Order.create(payload));
+  return fileStore.create("orders", payload);
+};
+
+const concierge = createConcierge({
+  listReservations,
+  createReservation: createReservationRecord,
+  updateGuestReservation,
+  createOrder: createOrderRecord,
+});
+
+app.get("/agent/health", (_req, res) => res.json(concierge.health()));
+app.get("/api/agent/health", (_req, res) => res.json(concierge.health()));
+app.post("/agent/reset", (req, res) => {
+  concierge.reset(String(req.body?.session_id || "web"));
+  res.json({ ok: true });
+});
+app.post("/api/agent/reset", (req, res) => {
+  concierge.reset(String(req.body?.session_id || "web"));
+  res.json({ ok: true });
+});
+app.post("/agent/turn", async (req, res) => {
+  try {
+    const message = String(req.body?.message || "").trim();
+    if (!message) return res.status(400).json({ message: "Say something." });
+    const result = await concierge.turn(String(req.body?.session_id || "web"), message, req.body || {});
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Concierge failed." });
+  }
+});
+app.post("/api/agent/turn", async (req, res) => {
+  try {
+    const message = String(req.body?.message || "").trim();
+    if (!message) return res.status(400).json({ message: "Say something." });
+    const result = await concierge.turn(String(req.body?.session_id || "web"), message, req.body || {});
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Concierge failed." });
   }
 });
 
@@ -268,18 +374,33 @@ app.patch("/api/inquiries/:id", requireAdmin, async (req, res) => {
 });
 
 const start = async () => {
-  try {
-    await mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 2500 });
-    useMongo = true;
-    console.log(`MongoDB connected: ${MONGO_URI}`);
-  } catch (error) {
-    useMongo = false;
-    console.warn(`MongoDB unavailable (${error.message}). Using local JSON store.`);
+  await ensureDb();
+
+  const dist = path.join(__dirname, "../dist");
+  if (fs.existsSync(dist)) {
+    app.use(express.static(dist));
+    app.get("*", (req, res, next) => {
+      if (req.path.startsWith("/api") || req.path.startsWith("/agent")) return next();
+      res.sendFile(path.join(dist, "index.html"));
+    });
   }
 
-  app.listen(PORT, () => {
-    console.log(`Ayush kitchen API on http://localhost:${PORT} [${useMongo ? "mongodb" : "file"}]`);
+  app.listen(PORT, "0.0.0.0", () => {
+    const urls = [`http://localhost:${PORT}`];
+    for (const addrs of Object.values(os.networkInterfaces())) {
+      for (const addr of addrs || []) {
+        if (addr.family === "IPv4" && !addr.internal) {
+          urls.push(`http://${addr.address}:${PORT}`);
+        }
+      }
+    }
+    console.log(`Ayush kitchen API [${useMongo ? "mongodb" : "file"}]`);
+    urls.forEach((url) => console.log(`  ${url}`));
   });
 };
 
-start();
+export default app;
+
+if (!process.env.VERCEL) {
+  start();
+}

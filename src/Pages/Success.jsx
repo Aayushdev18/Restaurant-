@@ -21,7 +21,11 @@ const Success = () => {
     <section className="notFound successPage">
       <div className="container">
         <img src="/sandwich.png" alt="Reservation confirmed" />
-        <h1>Your table request is in the kitchen.</h1>
+        <h1>
+          {state?.saved === false
+            ? "Your table request is on WhatsApp."
+            : "Your table request is in the kitchen."}
+        </h1>
         {booking ? (
           <div className="booking_summary">
             <p>

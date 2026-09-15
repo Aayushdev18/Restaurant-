@@ -7,8 +7,10 @@
     "dev": "concurrently -n api,agent,web -c yellow,magenta,cyan \"npm run dev:server\" \"npm run dev:agent\" \"npm run dev:client\"",
     "dev:client": "vite",
     "dev:server": "node --watch server/index.js",
-    "dev:agent": "agent/.venv/bin/python -m uvicorn app:app --app-dir agent --reload --port 8000 --host 127.0.0.1",
+    "dev:agent": "agent/.venv/bin/python -m uvicorn app:app --app-dir agent --reload --port 8000 --host 0.0.0.0",
     "build": "vite build",
+    "start": "node server/index.js",
+    "share": "npx --yes cloudflared tunnel --protocol http2 --url http://127.0.0.1:5173",
     "lint": "eslint .",
     "preview": "vite preview"
   },

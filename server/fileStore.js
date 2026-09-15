@@ -4,22 +4,45 @@ import { fileURLToPath } from "node:url";
 import { randomUUID } from "node:crypto";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "data");
+const dataDir = process.env.VERCEL ? "/tmp/ayush-store" : path.join(__dirname, "data");
 const dataFile = path.join(dataDir, "store.json");
 
 const empty = () => ({ reservations: [], orders: [], inquiries: [] });
 
+const memoryKey = "__ayushRestaurantStore";
+const memory = () => {
+  if (!globalThis[memoryKey]) globalThis[memoryKey] = empty();
+  return globalThis[memoryKey];
+};
+
 const read = () => {
-  try {
-    return { ...empty(), ...JSON.parse(fs.readFileSync(dataFile, "utf8")) };
-  } catch {
-    return empty();
+  const data = empty();
+  const mem = memory();
+  for (const key of Object.keys(data)) {
+    if (Array.isArray(mem[key])) data[key] = mem[key];
   }
+  try {
+    const parsed = JSON.parse(fs.readFileSync(dataFile, "utf8"));
+    for (const key of Object.keys(data)) {
+      if (Array.isArray(parsed[key]) && parsed[key].length >= data[key].length) {
+        data[key] = parsed[key];
+      }
+    }
+  } catch {
+    // Memory/tmp store until the first write.
+  }
+  globalThis[memoryKey] = data;
+  return data;
 };
 
 const write = (data) => {
-  fs.mkdirSync(dataDir, { recursive: true });
-  fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+  globalThis[memoryKey] = data;
+  try {
+    fs.mkdirSync(dataDir, { recursive: true });
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+  } catch {
+    // Vercel disk can be read-only outside /tmp; memory still holds the row.
+  }
 };
 
 const stamp = (doc) => ({

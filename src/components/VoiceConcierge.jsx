@@ -61,6 +61,9 @@ const VoiceConcierge = () => {
   const [slots, setSlots] = useState({});
   const [pending, setPending] = useState(null);
   const [lines, setLines] = useState([GREETING]);
+  const lastReservationRef = useRef(null);
+  const offeredSlotsRef = useRef([]);
+  const timeConfirmedRef = useRef(false);
   const recognitionRef = useRef(null);
   const listRef = useRef(null);
   const busyRef = useRef(false);
@@ -91,10 +94,18 @@ const VoiceConcierge = () => {
       const { data } = await agentApi.post("/turn", {
         message,
         session_id: agentSessionId(),
+        slots,
+        pending,
+        last_reservation: lastReservationRef.current,
+        offered_slots: offeredSlotsRef.current,
+        time_confirmed: timeConfirmedRef.current,
       });
       const reply = data.reply || "I missed that. Could you repeat it?";
       setSlots(data.slots || {});
       setPending(data.pending || null);
+      lastReservationRef.current = data.last_reservation || lastReservationRef.current;
+      offeredSlotsRef.current = data.offered_slots || [];
+      timeConfirmedRef.current = Boolean(data.time_confirmed);
       const whatsapp = data.whatsapp_url;
       setLines((prev) => [...prev, { role: "maya", text: reply, whatsapp }]);
       speak(reply);
@@ -119,6 +130,9 @@ const VoiceConcierge = () => {
       // Local UI reset is enough if the agent restarted.
     }
     newAgentSession();
+    lastReservationRef.current = null;
+    offeredSlotsRef.current = [];
+    timeConfirmedRef.current = false;
     setSlots({});
     setPending(null);
     setHint("");

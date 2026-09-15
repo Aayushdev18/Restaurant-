@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = axios.create({
   baseURL: "/api",
-  timeout: 12000,
+  timeout: 20000,
 });
 
 export const kitchenToken = () => sessionStorage.getItem("ayushKitchenToken") || "";

@@ -34,6 +34,8 @@ npm run dev
 ```
 
 - Site: http://localhost:5173
+- Other phones/laptops on this Wi‑Fi: the Network URL Vite prints
+- Any device on the internet: keep `npm run dev` running, then `npm run share` and open the `https://….trycloudflare.com` link it prints
 - Kitchen API: http://localhost:5001/api/health
 - Concierge: http://localhost:8000/docs
 - Staff board: http://localhost:5173/kitchen (password is `ADMIN_KEY` in `server/.env`, default `ayush-kitchen`)
